@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>zADE Portal — Mainframe Home</title>
+
+  <!--
+    Favicon: replace with a locally hosted file (e.g. assets/img/favicon.ico)
+    once deployed, to avoid a dependency on ibm.com being reachable.
+  -->
+  <link rel="icon" href="https://www.ibm.com/favicon.ico" type="image/x-icon" />
+
+  <!--
+    External CDN dependencies — Font Awesome icons and IBM Plex fonts.
+    In an air-gapped z/OS homelab these will fail silently (icons won't render,
+    fallback fonts will be used). To self-host:
+      • Font Awesome: download to assets/fonts/fontawesome/ and update this href.
+      • IBM Plex:     download to assets/fonts/ibm-plex/ and use @font-face rules in main.css.
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Application stylesheet — served as a static resource from the WAR root -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+
+  <!-- ── Shell Header ── -->
+  <header class="shell-header" role="banner">
+    <a href="#main-content" class="shell-skip-link">Skip to main content</a>
+
+    <button class="hamburger-btn" id="hamburger"
+            aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <a href="#main-content" class="shell-header-name" aria-label="zADE Portal — return to top">
+      <span class="ibm-logo">IBM</span>
+      <span class="product-name">zADE Portal</span>
+    </a>
+
+    <nav class="shell-header-nav" id="nav" aria-label="Primary navigation">
+      <a href="#system">System Management</a>
+      <a href="#docs">Documentation</a>
+      <a href="#tools">Tools</a>
+      <a href="#apis">APIs</a>
+      <a href="#repos">Repositories</a>
+    </nav>
+
+    <div class="shell-header-global">
+      <button id="labinfo-btn" aria-label="Lab Info" title="Lab Info" aria-haspopup="dialog">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+      </button>
+      <button id="help-btn" aria-label="Help" title="Help" aria-haspopup="dialog">
+        <i class="fas fa-question-circle" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Main Content ── -->
+  <main id="main-content">
+    <div class="page-wrapper">
+
+      <!-- ── Hero ── -->
+      <div class="page-hero">
+        <p class="page-hero-eyebrow">
+          <i class="fas fa-server" aria-hidden="true"></i>&nbsp; Ben's Big Iron Lab
+        </p>
+        <h1>zADE — z/Advanced Development Environment</h1>
+        <p>Your central access point for z/OSMF, Zowe, APIs, and reference
+           documentation in your zADE environment — running on ADCD z32a (z/OS 3.2).</p>
+
+        <div class="status-legend" role="region" aria-label="Service status legend">
+          <span class="status-legend-item">
+            <span class="legend-dot up"      aria-hidden="true"></span>Reachable
+          </span>
+          <span class="status-legend-item">
+            <span class="legend-dot loading" aria-hidden="true"></span>Checking
+          </span>
+          <span class="status-legend-item">
+            <span class="legend-dot unknown" aria-hidden="true"></span>Unknown
+          </span>
+          <span class="status-legend-item">
+            <span class="legend-dot down"    aria-hidden="true"></span>Unreachable
+          </span>
+          <span class="last-checked" id="last-checked-status" aria-live="polite"></span>
+          <button class="refresh-btn" id="refresh-btn"
+                  title="Re-check all service statuses"
+                  aria-label="Re-check all service statuses">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh Status
+          </button>
+        </div>
+      </div>
+
+      <!-- ── SYSTEM MANAGEMENT ── -->
+      <section class="section" id="system" aria-labelledby="section-system">
+        <div class="section-header">
+          <h2 id="section-system">
+            <i class="fas fa-cog" aria-hidden="true"></i>System Management
+          </h2>
+        </div>
+        <div class="card-grid">
+
+          <article class="tile tile--system">
+            <span class="status-dot loading" id="zosmf-status"
+                  role="img" title="Checking status&hellip;" aria-label="z/OSMF status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-cogs" aria-hidden="true"></i>z/OSMF</div>
+            <h3>IBM z/OS Management Facility</h3>
+            <p>Web-based management for z/OS. Use for system tasks, workflows, and REST APIs.</p>
+            <div class="tile-links">
+              <a href="https://s0w1.dal-ebis.ihost.com:10443/zosmf/LogOnPanel.jsp"
+                 target="_blank" rel="noopener noreferrer">
+                Open z/OSMF <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile tile--system">
+            <span class="status-dot loading" id="zowe-status"
+                  role="img" title="Checking status&hellip;" aria-label="Zowe status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-plug" aria-hidden="true"></i>Zowe</div>
+            <h3>Zowe Web UI &amp; API Gateway</h3>
+            <p>Web UI and API gateway for mainframe tools. Helpful for file browsing, CLI, and extensions.</p>
+            <div class="tile-links">
+              <a href="https://s0w1.dal-ebis.ihost.com:7554/zlux/ui/v1/ZLUX/plugins/org.zowe.zlux.bootstrap/web/"
+                 target="_blank" rel="noopener noreferrer">
+                Open Zowe <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── DOCUMENTATION & REFERENCE ── -->
+      <section class="section" id="docs" aria-labelledby="section-docs">
+        <div class="section-header">
+          <h2 id="section-docs">
+            <i class="fas fa-book" aria-hidden="true"></i>Documentation &amp; Reference
+          </h2>
+        </div>
+        <div class="card-grid">
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fas fa-book" aria-hidden="true"></i>Playbook</div>
+            <h3>Db2 Tools Environment</h3>
+            <p>Neale's playbook for the Db2 Tools environment on GitHub — setup guides and best practices.</p>
+            <div class="tile-links">
+              <a href="https://github.com/zeditor01/zowe_db2_tools/tree/main"
+                 target="_blank" rel="noopener noreferrer">
+                Open Db2 Tools Playbook <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fab fa-github" aria-hidden="true"></i>JCL Library</div>
+            <h3>JCL Sample Library</h3>
+            <p>Sample and production JCL jobs stored centrally for easy reference and reuse.</p>
+            <div class="tile-links">
+              <a href="https://github.com/benjaminthompson1/JCL"
+                 target="_blank" rel="noopener noreferrer">
+                Open JCL Library <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fas fa-book-open" aria-hidden="true"></i>IBM Docs</div>
+            <h3>IBM Documentation</h3>
+            <p>Official documentation for z/OS 3.2, Db2 13, and CICS TS 6.3.</p>
+            <div class="tile-links">
+              <a href="https://www.ibm.com/docs/en/zos/3.2.0"
+                 target="_blank" rel="noopener noreferrer">
+                z/OS 3.2 Docs <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.ibm.com/docs/en/db2-for-zos/13"
+                 target="_blank" rel="noopener noreferrer">
+                Db2 13 Docs <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.ibm.com/docs/en/cics-ts/6.x?topic=whats-new-in-cics-ts-63"
+                 target="_blank" rel="noopener noreferrer">
+                CICS TS 6.3 Docs <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a href="https://docs.zowe.org/"
+                 target="_blank" rel="noopener noreferrer">
+                Zowe Docs <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fas fa-book-reader" aria-hidden="true"></i>Redbooks</div>
+            <h3>IBM Redbooks</h3>
+            <p>Guidance, best practices, and implementation tips across IBM products and technologies.</p>
+            <div class="tile-links">
+              <a href="https://www.redbooks.ibm.com/"
+                 target="_blank" rel="noopener noreferrer">
+                Open IBM Redbooks <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fas fa-life-ring" aria-hidden="true"></i>Support</div>
+            <h3>IBM Support</h3>
+            <p>Case management, downloads, and technical assistance via the IBM Support portal.</p>
+            <div class="tile-links">
+              <a href="https://www.ibm.com/mysupport/s/?language=en_US"
+                 target="_blank" rel="noopener noreferrer">
+                Open IBM Support <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <div class="tile-tag"><i class="fab fa-gitlab" aria-hidden="true"></i>GitLab Docs</div>
+            <h3>GitLab Documentation</h3>
+            <p>Official GitLab documentation for installation, configuration, and usage.</p>
+            <div class="tile-links">
+              <a href="https://docs.gitlab.com/"
+                 target="_blank" rel="noopener noreferrer">
+                Open GitLab Docs <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── TOOLS ── -->
+      <section class="section" id="tools" aria-labelledby="section-tools">
+        <div class="section-header">
+          <h2 id="section-tools">
+            <i class="fas fa-tools" aria-hidden="true"></i>Tools
+          </h2>
+        </div>
+        <div class="card-grid">
+
+          <article class="tile">
+            <span class="status-dot loading" id="guac-status"
+                  role="img" title="Checking status&hellip;" aria-label="Apache Guacamole status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-desktop" aria-hidden="true"></i>Remote Access</div>
+            <h3>Apache Guacamole</h3>
+            <p>Browser-based remote desktop gateway for accessing systems via SSH, RDP, and VNC.</p>
+            <div class="tile-links">
+              <a href="https://guac.mainframehome.net/#/"
+                 target="_blank" rel="noopener noreferrer">
+                Open Guacamole <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile">
+            <span class="status-dot loading" id="minio-status"
+                  role="img" title="Checking status&hellip;" aria-label="MinIO status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-database" aria-hidden="true"></i>Object Storage</div>
+            <h3>MinIO Console</h3>
+            <p>S3-compatible object storage console for DFSMScdm cloud data management.
+               Browse buckets, manage objects, and configure policies.</p>
+            <div class="tile-links">
+              <a href="https://minio.mainframehome.net/browser"
+                 target="_blank" rel="noopener noreferrer">
+                Open MinIO Console <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── APIs — z/OS Connect EE ── -->
+      <section class="section" id="apis" aria-labelledby="section-apis">
+        <div class="section-header">
+          <h2 id="section-apis">
+            <i class="fas fa-code" aria-hidden="true"></i>APIs — z/OS Connect EE
+          </h2>
+        </div>
+        <div class="card-grid">
+
+          <article class="tile tile--api">
+            <span class="status-dot loading" id="catalog-single-status"
+                  role="img" title="Checking status&hellip;" aria-label="Catalog single API status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-box" aria-hidden="true"></i>Catalog</div>
+            <h3>Catalog Item — Single</h3>
+            <p>Retrieves a single catalog item by ID from the CICS Catalog Manager sample application.</p>
+            <div class="tile-endpoint">
+              <a href="https://zcee3.mainframehome.net/items/10"
+                 target="_blank" rel="noopener noreferrer">
+                GET /items/10
+              </a>
+              <button class="copy-btn" data-copy="https://zcee3.mainframehome.net/items/10"
+                      aria-label="Copy endpoint URL" title="Copy URL">
+                <i class="fas fa-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+          </article>
+
+          <article class="tile tile--api">
+            <span class="status-dot loading" id="employee-single-status"
+                  role="img" title="Checking status&hellip;" aria-label="Employee single record API status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-user" aria-hidden="true"></i>Employees</div>
+            <h3>Employee — Single Record</h3>
+            <p>Db2 native REST service returning a single employee row from the EMP sample table.</p>
+            <div class="tile-endpoint">
+              <a href="https://zcee3.mainframehome.net/employees/000010"
+                 target="_blank" rel="noopener noreferrer">
+                GET /employees/000010
+              </a>
+              <button class="copy-btn" data-copy="https://zcee3.mainframehome.net/employees/000010"
+                      aria-label="Copy endpoint URL" title="Copy URL">
+                <i class="fas fa-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+          </article>
+
+          <article class="tile tile--api">
+            <span class="status-dot loading" id="catalog-list-status"
+                  role="img" title="Checking status&hellip;" aria-label="Catalog list API status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-boxes" aria-hidden="true"></i>Catalog</div>
+            <h3>Catalog Items — List</h3>
+            <p>Retrieves a list of catalog items using the CICS Catalog Manager sample application.</p>
+            <div class="tile-endpoint">
+              <a href="https://zcee3.mainframehome.net/items?startItemID=10"
+                 target="_blank" rel="noopener noreferrer">
+                GET /items?startItemID=10
+              </a>
+              <button class="copy-btn" data-copy="https://zcee3.mainframehome.net/items?startItemID=10"
+                      aria-label="Copy endpoint URL" title="Copy URL">
+                <i class="fas fa-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+          </article>
+
+          <article class="tile tile--api">
+            <span class="status-dot loading" id="employee-query-status"
+                  role="img" title="Checking status&hellip;" aria-label="Employees query API status: checking"></span>
+            <div class="tile-tag"><i class="fas fa-users" aria-hidden="true"></i>Employees</div>
+            <h3>Employees by Dept &amp; Job</h3>
+            <p>Db2 native REST service querying employees filtered by department and job code.</p>
+            <div class="tile-endpoint">
+              <a href="https://zcee3.mainframehome.net/employees?department=A00&job=PRES%20%20%20%20"
+                 target="_blank" rel="noopener noreferrer">
+                GET /employees?department=A00&amp;job=PRES
+              </a>
+              <button class="copy-btn" data-copy="https://zcee3.mainframehome.net/employees?department=A00&job=PRES%20%20%20%20"
+                      aria-label="Copy endpoint URL" title="Copy URL">
+                <i class="fas fa-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── REPOSITORIES ── -->
+      <section class="section" id="repos" aria-labelledby="section-repos">
+        <div class="section-header">
+          <h2 id="section-repos">
+            <i class="fas fa-code-branch" aria-hidden="true"></i>Repositories
+          </h2>
+        </div>
+        <div class="card-grid">
+
+          <article class="tile tile--gitlab">
+            <div class="tile-tag"><i class="fab fa-gitlab" aria-hidden="true"></i>GitLab</div>
+            <h3>Local GitLab Instance</h3>
+            <p>Access your local GitLab instance for mainframe development projects and CI/CD pipelines.</p>
+            <div class="tile-links">
+              <a href="http://192.168.1.165.nip.io/"
+                 target="_blank" rel="noopener noreferrer">
+                Open Local GitLab <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="tile tile--github">
+            <div class="tile-tag"><i class="fab fa-github" aria-hidden="true"></i>GitHub</div>
+            <h3>GitHub Profile</h3>
+            <p>Benjamin Thompson's public repositories and mainframe contributions.</p>
+            <div class="tile-links">
+              <a href="https://github.com/benjaminthompson1"
+                 target="_blank" rel="noopener noreferrer">
+                Open GitHub Profile <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── Footer ── -->
+      <footer>
+        <div>
+          <p id="last-updated"></p>
+          <p>Maintained by Benjamin Thompson &nbsp;|&nbsp; Powered by IBM zADE &amp; z/OS Liberty</p>
+        </div>
+        <span class="ibm-mark">IBM&#174;</span>
+      </footer>
+
+    </div><!-- /page-wrapper -->
+  </main>
+
+  <!-- ── Lab Info Modal ── -->
+  <div id="labinfo-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="labinfo-modal-title" hidden>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="labinfo-modal-title">
+          <i class="fas fa-info-circle" aria-hidden="true"></i> Lab Info &amp; Quick Reference
+        </h2>
+        <button id="labinfo-close-btn" class="modal-close-btn" aria-label="Close lab info">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <section class="help-section">
+          <h3>System</h3>
+          <table class="info-table">
+            <tr><th>z/OS level</th><td>3.2 (ADCD z32a — December 2025 Edition)</td></tr>
+            <tr><th>System name</th><td>Z32A</td></tr>
+            <tr><th>Sysplex</th><td>ADCDPL</td></tr>
+            <tr><th>Memory</th><td>28 GB</td></tr>
+            <tr><th>Processors</th><td>4 CP</td></tr>
+            <tr><th>Host OS</th><td>RHEL 9.5 (NUC)</td></tr>
+            <tr><th>zADE driver</th><td>z1090 v1.1.0.61.02</td></tr>
+            <tr><th>Linux user</th><td>ibmsys1</td></tr>
+          </table>
+        </section>
+
+        <section class="help-section">
+          <h3>Network</h3>
+          <table class="info-table">
+            <tr><th>Hostname</th><td><code>s0w1.dal-ebis.ihost.com</code> (S0W1)</td></tr>
+            <tr><th>z/OS LAN IP</th><td><code>192.168.1.171</code> (PORTB / ETH2)</td></tr>
+            <tr><th>z/OS tunnel IP</th><td><code>10.1.1.2</code> (PORTA / ETH1)</td></tr>
+            <tr><th>Linux LAN IP</th><td><code>192.168.1.170</code> (enp86s0 / F0)</td></tr>
+            <tr><th>Linux tunnel IP</th><td><code>10.1.1.1</code> (tap0)</td></tr>
+            <tr><th>DNS</th><td><code>8.8.8.8</code></td></tr>
+          </table>
+        </section>
+
+        <section class="help-section">
+          <h3>TSO Users</h3>
+          <table class="info-table">
+            <tr><th>ADCDMST</th><td>RACF Special authority</td></tr>
+            <tr><th>IBMUSER</th><td>RACF Special authority</td></tr>
+          </table>
+          <p><em>Passwords stored separately in 1Password.</em></p>
+          <table class="info-table">
+            <tr><th>ISPFPROC</th><td>Full-function ISPF logon</td></tr>
+            <tr><th>DBSPROCD</th><td>ISPF logon with Db2 V13 support</td></tr>
+          </table>
+        </section>
+
+        <section class="help-section">
+          <h3>Key HLQs</h3>
+          <ul>
+            <li><code>USER.Z32A.PARMLIB</code> — site-customised PARMLIB (<code>ZZ</code> suffix)</li>
+            <li><code>USER.Z32A.PROCLIB</code> — site-customised PROCLIB</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>LOADPARM Quick Reference</h3>
+          <table class="info-table">
+            <tr><th>CS</th><td>Base z/OS — cold start JES2</td></tr>
+            <tr><th>AL</th><td>All middleware (ADCD defaults)</td></tr>
+            <tr><th class="highlight">ZZ</th><td class="highlight">All middleware with z32a site customisations — standard loadparm</td></tr>
+          </table>
+        </section>
+
+        <section class="help-section">
+          <h3>Connecting</h3>
+          <table class="info-table">
+            <tr><th>SSH (LAN)</th><td><code>ssh ibmuser@192.168.1.171 -p 65522</code></td></tr>
+            <tr><th>SSH (tunnel)</th><td><code>ssh ibmuser@10.1.1.2 -p 65522</code></td></tr>
+          </table>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Help Modal ── -->
+  <div id="help-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="help-modal-title" hidden>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="help-modal-title">
+          <i class="fas fa-question-circle" aria-hidden="true"></i> zADE Portal Help
+        </h2>
+        <button id="help-close-btn" class="modal-close-btn" aria-label="Close help">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <section class="help-section">
+          <h3>About</h3>
+          <p>The zADE Portal is the central access point for Ben's Big Iron Lab — a personal
+             z/OS 3.2 homelab running ADCD z32a. Use the navigation bar or scroll to reach
+             each section.</p>
+        </section>
+
+        <section class="help-section">
+          <h3>Sections</h3>
+          <ul>
+            <li><strong>System Management</strong> — z/OSMF and Zowe web interfaces.</li>
+            <li><strong>Documentation &amp; Reference</strong> — IBM Docs, Redbooks, JCL library, and support links.</li>
+            <li><strong>Tools</strong> — Apache Guacamole (remote desktop) and MinIO (object storage).</li>
+            <li><strong>APIs</strong> — z/OS Connect EE sample endpoints with live status and copy buttons.</li>
+            <li><strong>Repositories</strong> — Local GitLab instance and GitHub profile.</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>Service Status Indicators</h3>
+          <ul class="help-status-list">
+            <li><span class="legend-dot up" aria-hidden="true"></span><strong>Reachable</strong> — portal can reach the service.</li>
+            <li><span class="legend-dot loading" aria-hidden="true"></span><strong>Checking</strong> — status poll in progress.</li>
+            <li><span class="legend-dot unknown" aria-hidden="true"></span><strong>Unknown</strong> — service did not respond conclusively.</li>
+            <li><span class="legend-dot down" aria-hidden="true"></span><strong>Unreachable</strong> — service could not be contacted.</li>
+          </ul>
+          <p>Hover any dot to see its current state. Use <strong>Refresh Status</strong> to re-poll all services.</p>
+        </section>
+
+        <section class="help-section">
+          <h3>Tips</h3>
+          <ul>
+            <li>Click any API endpoint URL to open it in a new tab, or use the copy button to grab the URL.</li>
+            <li>All service links open in a new tab and do not leave the portal.</li>
+            <li>The floating <strong>&#8593;</strong> button appears after scrolling down — click it to return to the top.</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>Environment</h3>
+          <ul>
+            <li><strong>System:</strong> ADCD z32a — z/OS 3.2</li>
+            <li><strong>Portal:</strong> <a href="https://zade.mainframehome.net/zADE-Portal/" target="_blank" rel="noopener noreferrer">zade.mainframehome.net/zADE-Portal/</a></li>
+            <li><strong>Served by:</strong> IBM Liberty on z/OS</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification region (aria-live lets screen readers announce new messages) -->
+  <div id="notification-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Single back-to-top button; visibility controlled by main.js -->
+  <button id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <!--
+    Application script — defer ensures it runs after DOM is parsed.
+    External file allows Liberty CSP to use script-src 'self' instead of 'unsafe-inline'.
+  -->
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
